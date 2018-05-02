@@ -4,11 +4,9 @@ import org.scalacheck.Prop.{forAll, throws, AnyOperators}
 
 
 
-object listaTest extends Properties("sdfsdf"){
+object listaTest extends Properties("Test"){
   //Método de generacion de listas de valores enteros:
   val secuenciaEnteros = listOfN(10, choose(0,10))
-
-
 
 
   println(secuenciaEnteros.sample)
@@ -188,7 +186,7 @@ object listaTest extends Properties("sdfsdf"){
     }
 
 
-  property ("Eliminar mientras sea par") =
+  property ("Filter numeros pares") =
     forAll(secuenciaEnteros){
       xs => {
         val lista:Lista[Int] = Lista(xs : _*)
@@ -203,10 +201,9 @@ object listaTest extends Properties("sdfsdf"){
 
         def pares (x:Int):Boolean = x%2 == 0
         //ahora utilizamos la funcion de Lista:
-        val paresLista = Lista.eliminarMientras(lista, pares)
+        val paresLista = Lista.filter(lista, pares)
 
-        //println(paresList)
-        //println(Lista.toList(paresLista))
+        
         //se comprueba la igualdad:
         paresList ?= Lista.toList(paresLista)
       }

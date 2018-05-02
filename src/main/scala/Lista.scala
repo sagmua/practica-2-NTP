@@ -223,14 +223,14 @@ object Lista{
   * @return
   */
 
-  def eliminarMientras[A](lista : Lista[A], criterio: A => Boolean) : Lista[A] = {
+  def filter[A](lista : Lista[A], criterio: A => Boolean) : Lista[A] = {
     lista match {
       case Nil => lista
       case Constructor(cabeza, cola) => {
         if(criterio(cabeza))
-          concatenar(Nil, eliminarMientras(cola, criterio))
+          concatenar(Nil, filter(cola, criterio))
         else
-          concatenar(Lista(cabeza), eliminarMientras(cola, criterio))
+          concatenar(Lista(cabeza), filter(cola, criterio))
       }
     }
   }
@@ -271,7 +271,7 @@ object Prueba extends App{
 
   def criterio (x:Int):Boolean = x%2 == 0
 
-  println(Lista.toList(Lista.eliminarMientras(lista, criterio)))
+  println(Lista.toList(Lista.filter(lista, criterio)))
 
 
 }
