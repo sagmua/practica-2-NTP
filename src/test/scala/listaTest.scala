@@ -210,6 +210,25 @@ object listaTest extends Properties("Test"){
     }
 
 
+  property ("eliminarMientras numeros pares") =
+    forAll(secuenciaEnteros){
+      xs => {
+        val lista:Lista[Int] = Lista(xs : _*)
+
+
+        def par (x:Int):Boolean = x%2 == 0
+
+        val paresList = xs.dropWhile(par)
+
+ 
+        val paresLista = Lista.eliminarMientras(lista, par)
+
+        //se comprueba la igualdad:
+        paresList ?= Lista.toList(paresLista)
+      }
+    }
+
+
 
 
 

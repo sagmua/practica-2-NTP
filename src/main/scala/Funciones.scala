@@ -8,10 +8,13 @@ object Funciones {
     * @param columna nº de la col. del triángulo
     * @param fila nº de la fil. del triángulo
     * @return resultado
-    */
+  */
   def calcularValorTrianguloPascal(fila: Int, columna: Int): Int = {
-    if (columna == 0 || columna == fila) 1
-    else calcularValorTrianguloPascal(fila-1, columna-1) + calcularValorTrianguloPascal(fila-1, columna)
+    if (columna == 0 || columna == fila) 
+      1
+    else 
+      //llamada recursiva para los dos caminos siguientes:
+      calcularValorTrianguloPascal(fila-1, columna-1) + calcularValorTrianguloPascal(fila-1, columna)
   }
 
   /**
@@ -23,11 +26,17 @@ object Funciones {
   def chequearBalance(cadena: List[Char]): Boolean = {
     @annotation.tailrec
     def go(lista: List[Char], acum: Int): Boolean ={
-      if (lista.isEmpty) acum == 0
-      else if (acum < 0) false
-      else if (lista.head == '(') go(lista.tail, acum+1)
-      else if (lista.head == ')') go(lista.tail, acum-1)
-      else go(lista.tail,acum)
+      //Si está vacía devolvemos si es iguál a 0
+      if (lista.isEmpty) 
+        acum == 0
+      else if (acum < 0) 
+        false
+      else if (lista.head == '(') 
+        go(lista.tail, acum+1)
+      else if (lista.head == ')') 
+        go(lista.tail, acum-1)
+      else 
+        go(lista.tail,acum)
     }
     go (cadena, 0)
   }
@@ -41,10 +50,14 @@ object Funciones {
     */
   def contarCambiosPosibles(cantidad: Int, monedas: List[Int]): Int = {
     def cambios(cantidad: Int, monedas: List[Int]): Int = {
-      if (cantidad == 0) 1
-      else if (monedas.isEmpty) 0
-      else if (cantidad < monedas.head) 0
-      else {
+      //Si es igual a 0, sólo podemos realizar un cambio:
+      if (cantidad == 0) 
+        1
+      else if (monedas.isEmpty) //Si está vacía, no hay cambios posibles
+        0
+      else if (cantidad < monedas.head) //si es más pequeño el primero, no hay suficiente
+        0
+      else{ //En caso contrario, llamada recursiva:
         var acum = 0
         for (i <- 0 to cantidad by monedas.head){
           acum += cambios(cantidad-i, monedas.tail)
@@ -54,8 +67,10 @@ object Funciones {
     }
 
     val monedasOrdenadas = monedas.sorted
-    if (cantidad > 0) cambios(cantidad, monedas)
-    else 0
+    if (cantidad > 0) 
+      cambios(cantidad, monedas)
+    else 
+      0
 
   }
 
@@ -67,28 +82,36 @@ object Funciones {
     * @tparam A
     * @return posición del elemento a buscar. -1 si no existe.
     */
-  def busquedaBinaria[A](coleccion : Array[A], aBuscar: A,
-                         criterio : (A,A) => Boolean) : Int = {
+  def busquedaBinaria[A](coleccion : Array[A], aBuscar: A, criterio : (A,A) => Boolean) : Int = {
 
     @annotation.tailrec
     def go(coleccion : Array[A], acum: Int): Int = {
       val medio = coleccion.length / 2
       val valorMedio = coleccion(medio)
-      if (valorMedio == aBuscar) acum+medio
-      else if (coleccion.length == 1) -1
+
+      if (valorMedio == aBuscar) 
+        acum+medio
+      else if (coleccion.length == 1) 
+        -1
       else {
         if (criterio(valorMedio,aBuscar) == true){
-          if (medio+1 == coleccion.length) -1
-          else go(coleccion.slice(medio+1,coleccion.length),acum+medio+1)
+          if (medio+1 == coleccion.length) 
+            -1
+          else 
+            go(coleccion.slice(medio+1,coleccion.length),acum+medio+1)
         }
         else{
-          if (medio == 0) -1
-          else go(coleccion.slice(0,medio),acum)
+          if (medio == 0) 
+            -1
+          else 
+            go(coleccion.slice(0,medio),acum)
         }
       }
     }
 
-    if (coleccion.length == 0) -1
-    else go(coleccion,0)
+    if (coleccion.length == 0) 
+      -1
+    else 
+      go(coleccion,0)
   }
 }

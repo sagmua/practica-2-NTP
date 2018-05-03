@@ -2,7 +2,7 @@ import org.scalacheck.{Gen, Properties}
 import org.scalacheck.Prop.{forAll, all, AnyOperators}
 import org.scalacheck.Gen._
 
-object FuncionesTest extends Properties("FuncionesTest"){
+object FuncionesTest extends Properties("TestFunciones"){
 
   //triángulo de Pascal:
 

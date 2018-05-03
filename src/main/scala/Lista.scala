@@ -258,20 +258,23 @@ object Lista{
     }
   }
 
+  /**
+    * elimina elementos del principio hasa que se cumpla la condición
+    * @param lista
+    * @param criterio
+    * @tparam A
+    * @return
+    */
+  def eliminarMientras[A](lista: Lista[A], criterio: A => Boolean): Lista[A] = {
+    lista match {
+      case Nil => lista
+      case Constructor(cabeza, cola) => if (criterio(cabeza)) eliminarMientras(cola, criterio)
+      else lista
+    }
+  }
+
 
 
 }
 
 
-object Prueba extends App{
-  val lista = Lista(1,2,3,4,5,6,7,8)
-
-  println(Lista.toList(Lista.eliminarUltimo(lista)))
-  println(Lista.toList(Lista.eliminar(lista, 2)))
-
-  def criterio (x:Int):Boolean = x%2 == 0
-
-  println(Lista.toList(Lista.filter(lista, criterio)))
-
-
-}
